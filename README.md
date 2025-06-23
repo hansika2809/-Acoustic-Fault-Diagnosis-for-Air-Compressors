@@ -1,4 +1,4 @@
-# -Acoustic-Fault-Diagnosis-for-Air-Compressors
+# ML-Driven-Acoustic-Fault-Diagnosis-for-Air-Compressors
 **Overview**-
 
 This project demonstrates a machine learning pipeline for early detection of faults in reciprocating air compressors using acoustic signals. By processing sound recordings from a single optimized sensor location, the system predicts one of eight machine states (healthy + 7 fault modes) to support proactive, data-driven maintenance.
