@@ -1,56 +1,64 @@
-# 🔄 Interactive Limit Order Book  
-Mentor-**Prof. Anirban Banerjee**, IIM Ahmedabad  
-**Timeline:** Dec 2024 – May 2025  
+# ML-Driven Fault Diagnosis for Air Compressors
+
+A machine learning framework to diagnose faults in **reciprocating air compressors** using **acoustic-sensor data**. This project classifies compressor states across **7 operating conditions** using extracted time, frequency, and hybrid-domain features.
+
+> Developed as part of the "Artificial Intelligence and Machine Learning" course at IIT Kanpur under the guidance of **Prof. Nishchal K. Verma**.
 
 ---
 
-## 📌 Project Overview  
-Developed a full-featured trading simulator that replicates modern equity exchange mechanics. The engine supports multiple order types, processes high‑throughput event streams, and delivers live order book updates for research and classroom demos.
+## 🔍 Problem Statement
+
+Reciprocating air compressors often exhibit distinct acoustic signatures under different fault conditions. This project aims to:
+- Build a robust classification model using short-duration acoustic recordings (5 seconds).
+- Accurately identify the operational state (normal/faulty) of a compressor based on the captured sound.
 
 ---
 
-## 🧩 Key Features  
+## 📦 Dataset
 
-- **Multi‑Order Engine**  
-  - Implemented 5+ order types: Market, Limit, Immediate‑Or‑Cancel (IOC), Iceberg, Stop‑Loss.  
-  - Precise order matching logic to mirror real-world exchange rules.
-
-- **Realistic Market Simulation**  
-  - Modeled order flow from 600+ simulated users.  
-  - Tested across 10+ market scenarios covering varying volatility and liquidity regimes.
-
-- **Live Order Book Updates**  
-  - Bid/ask book rendered in real time via WebSockets and AJAX.  
-  - Zero‑reload UI syncs seamlessly with backend matching engine.
-
-- **High‑Performance Matching**  
-  - Event‑driven architecture powered by Redis pub/sub.  
-  - Sustained throughput of 10,000+ orders per minute with <2 s round‑trip latency.
-
-- **Post‑Trade Analytics**  
-  - All trades and user sessions logged in PostgreSQL.  
-  - CSV export for offline strategy analysis and performance review.
+- **Total Samples**: 1800+ audio recordings  
+- **Duration**: 5 seconds per recording  
+- **Classes**: 7 fault conditions (including healthy state)  
+- **Sensor**: Uniaxial microphone for sound capture  
+- **Sampling Rate**: 44.1 kHz (standard)
 
 ---
 
-## 🛠 Tech Stack  
+## 🔧 Preprocessing Pipeline
 
-- **Backend:** Django, Redis (pub/sub), PostgreSQL  
-- **Realtime:** WebSockets, AJAX  
-- **Data Export:** Python CSV utilities  
-- **Deployment:** Docker, Docker Compose  
+A streamlined pipeline was developed to ensure data quality and consistency:
 
----
-
-## 🚀 Impact & Next Steps  
-
-- **Scalable Classroom Demo:** Supports live trading labs for up to 50 concurrent students.  
-- **Research Platform:** Baseline for studying order‑book dynamics, algorithmic trading strategies, and latency effects.  
-- **Future Enhancements:**  
-  - Add more exotic order types (e.g., Stop‑Limit)  
-  - Web UI performance optimizations  
-  - Containerized CI/CD pipeline  
+1. **Clipping** – Remove low-intensity noise at the start/end of recordings  
+2. **Smoothing** – Apply filters to reduce short-term fluctuations  
+3. **Normalization** – Standardize amplitude across recordings
 
 ---
 
-> “A hands‑on environment that brings exchange mechanics to life—perfect for teaching, research, and prototyping new strategies.”  
+## 📊 Feature Engineering
+
+Extracted **629 acoustic features** from each recording, covering:
+- **Time-Domain**: RMS, ZCR, Kurtosis, Crest Factor, etc.
+- **Frequency-Domain**: Spectral Centroid, Bandwidth, Entropy
+- **Hybrid-Domain**: MFCCs, Energy Entropy, etc.
+
+### Feature Selection
+- Applied **mRMR** and **NMIFS** algorithms  
+- Reduced to **top 25 discriminative features** for model training
+
+---
+
+## 🤖 Modeling Approach
+
+Trained robust multiclass SVM classifiers using:
+- **One-vs-All (OAA)**
+- **One-vs-One (OAO)**
+- **Directed Acyclic Graph SVM (DAG-SVM)**
+
+### 🏆 Results
+- **Accuracy**: 99.5%
+- **Inference Time**: <10 seconds
+
+---
+
+
+
